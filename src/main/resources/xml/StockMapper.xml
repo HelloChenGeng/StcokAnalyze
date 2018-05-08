@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cg.mapper.StockMapper">
+
+
+    <insert id="mInsert" >
+        insert INTO stock(stockCode, stockName, lastTimeDealTime, lastTimePageCount, lastKLineDealDate)
+        VALUES (#{stockCode, jdbcType=VARCHAR}, #{stockName, jdbcType=VARCHAR}, #{lastTimeDealTime, jdbcType=VARCHAR}, #{lastTimePageCount, jdbcType=INTEGER}, #{lastKLineDealDate, jdbcType=VARCHAR} )
+    </insert>
+
+    <select id="selectAll" resultType="cn.cg.bean.StockBean">
+        select * from stock
+    </select>
+
+    <update id="mUpdatePageAndTime">
+        update stock set lastTimeDealTime = #{lastTimeDealTime, jdbcType=VARCHAR}, lastTimePageCount =  #{lastTimePageCount, jdbcType=INTEGER}
+        where stockCode = #{stockCode, jdbcType=VARCHAR}
+    </update>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cg.mapper.KLineDotMapper">
+
+    <insert id="mInsert" >
+        insert into klinedot(kDotNo, stockCode, type, tradeDate, tradeTime, startTime,
+                            endTime, startPrice, endPrice, amt, ema12, ema26, dif, dea, macd)
+        values (#{kDotNo, jdbcType=BIGINT}, #{stockCode, jdbcType=VARCHAR}, #{type, jdbcType=INTEGER}, #{tradeDate, jdbcType=VARCHAR}
+        , #{tradeTime, jdbcType=VARCHAR}, #{startTime, jdbcType=VARCHAR}, #{endTime, jdbcType=VARCHAR}, #{startPrice, jdbcType=DOUBLE}
+        , #{endPrice, jdbcType=DOUBLE}, #{amt, jdbcType=INTEGER}, #{ema12, jdbcType=DOUBLE}, #{ema26, jdbcType=DOUBLE}
+        , #{dif, jdbcType=DOUBLE}, #{dea, jdbcType=DOUBLE}, #{macd, jdbcType=DOUBLE})
+    </insert>
+
+    <select id="lastKLineDots" resultType="cn.cg.bean.KLineDotBean">
+        select * from klinedot t1, (select type, max(kDotNo) from klinedot where stockCode = #{stockCode, jdbcType=VARCHAR} group by type ) t2
+        where t1.stockCode = #{stockCode, jdbcType=VARCHAR} and t1.type=t2.type and t1.kDotNo = t2.kDotNo order by t1.type
+    </select>
+
+    <update id="updateKLineDotBean">
+        update klinedot set startprice = #{startPrice}, endprice = #{endPrice, jdbcType=DOUBLE}, amt = #{amt, jdbcType=INTEGER}, ema12 = #{ema12, jdbcType=DOUBLE}, ema26 = #{ema26, jdbcType=DOUBLE}, dif = #{dif, jdbcType=DOUBLE}, dea = #{dea, jdbcType=DOUBLE}, macd = #{macd, jdbcType=DOUBLE}
+        where stockCode = #{stockCode, jdbcType=VARCHAR} and tradeDate = #{tradeDate, jdbcType=VARCHAR} and tradeTime = #{tradeTime, jdbcType=VARCHAR} and type = #{type, jdbcType=INTEGER}
+    </update>
+
+</mapper>

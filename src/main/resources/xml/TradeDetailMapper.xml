@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.cg.mapper.TradeDetailMapper">
+
+
+    <insert id="mInsertList" >
+      INSERT  into tradeDetail(code, tradeDate, tradeTime, price, amt, sellFlag)
+      VALUES
+        <foreach collection="list" separator="," item="tradeDetail" >
+            (#{tradeDetail.code, jdbcType=VARCHAR}, #{tradeDetail.tradeDate, jdbcType=VARCHAR}, #{tradeDetail.tradeTime, jdbcType=VARCHAR}, #{tradeDetail.price, jdbcType=DOUBLE}, #{tradeDetail.amt, jdbcType=INTEGER}, #{tradeDetail.sellFlag, jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+
+    <select id="queryTradeDetail" resultType="cn.cg.bean.TradeDetailBean">
+        select * from tradedetail where code = #{stockCode, jdbcType=VARCHAR} and tradeDate = #{tradeDate, jdbcType=VARCHAR} and tradeDate between #{startTime, jdbcType=VARCHAR} and #{endTime, jdbcType=VARCHAR}
+    </select>
+</mapper>
