@@ -21,4 +21,9 @@
         where stockCode = #{stockCode, jdbcType=VARCHAR} and tradeDate = #{tradeDate, jdbcType=VARCHAR} and tradeTime = #{tradeTime, jdbcType=VARCHAR} and type = #{type, jdbcType=INTEGER}
     </update>
 
+    <select id="getLastKlineDotBean" resultType="cn.cg.bean.KLineDotBean">
+        select * from klinedot
+        where stockCode = #{stockCode, jdbcType=VARCHAR} and type = #{type, jdbcType=INTEGER} and kDotNo = #{kDotNo, jdbcType=BIGINT}
+    </select>
+
 </mapper>

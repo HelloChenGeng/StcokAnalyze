@@ -76,6 +76,7 @@ public class KLineAddTask {
                     KLineDotBean oldDot = oldDots[i];
                     KLineDotBean newDot = newDots[i];
                     List<TradeDetailBean> oldTradeDetails = tradeDetailService.queryTradeDetail(oldDot);
+                    // 更新旧的点的数据
                     kLineService.setKLineField(oldTradeDetails, oldDot);
                     kLineService.updateKLineDot(oldDot);
                     if(!oldDot.getTradeTime().equals(newDot.getTradeTime())){
@@ -83,9 +84,14 @@ public class KLineAddTask {
                         newDot.setkDotNo(oldDot.getkDotNo()+1);
                         List<TradeDetailBean> newTradeDetails = tradeDetailService.queryTradeDetail(newDot);
                         //设置该点的相关交易数据
-                        kLineService.setKLineField(oldTradeDetails, newDot);
-                        //计算该点的MACD的值
+                        kLineService.setKLineField(newTradeDetails, newDot);
+                        kLineService.calculateMACD(oldDot, newDot);
                         kLineService.insertKLineDot(newDot);
+                        //TODO 更新旧点的相关MACD数据
+                    } else {
+                        // 当前还没更新到新的点上，需要更新旧的点的MACD数据
+                        //TODO
+
                     }
                 }
             }

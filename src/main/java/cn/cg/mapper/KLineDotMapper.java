@@ -16,4 +16,6 @@ public interface KLineDotMapper {
 
     public KLineDotBean updateKLineDotBean(KLineDotBean dotBean);
 
+    public KLineDotBean getLastKlineDotBean(KLineDotBean newDot);
+
 }

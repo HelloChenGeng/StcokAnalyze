@@ -137,6 +137,48 @@ public class KLineService {
     }
 
     /**
+     * 计算新的点的MACD的值
+     * @param oldDot
+     * @param newDot
+     * @return
+     */
+    public void calculateMACD(KLineDotBean oldDot, KLineDotBean newDot){
+        double newEma12 = ( 2.0 / 13.0 * newDot.getEndPrice() ) + ( 11.0 / 13.0 * oldDot.getEma12() );
+        double newEma26 = ( 2.0 / 27.0 * newDot.getEndPrice() ) + ( 25.0 / 27.0 * oldDot.getEma26() );
+        double newDif = newEma12 - newEma26;
+        double newDea = 0.2 * newDif + 0.8 * oldDot.getDea();
+        double newMacd = 2 * (newDif - newDea);
+        newDot.setEma12(newEma12);
+        newDot.setEma26(newEma26);
+        newDot.setDif(newDif);
+        newDot.setDea(newDea);
+        newDot.setMacd(newMacd);
+    }
+
+    /**
+     * 计算新的点的MACD的值
+     * @param newDot
+     * @return
+     */
+    public void calculateMACD(KLineDotBean newDot){
+        KLineDotBean oldDot = getLastKlineDotBean(newDot);
+        this.calculateMACD(oldDot, newDot);
+    }
+
+    /**
+     * 根据新的K线上的点找到同股票同周期的上一个点
+     * @param newDot
+     * @return
+     */
+    private KLineDotBean getLastKlineDotBean(KLineDotBean newDot){
+        KLineDotBean oldDot = new KLineDotBean();
+        oldDot.setkDotNo(newDot.getkDotNo() - 1);
+        oldDot.setType(newDot.getType());
+        oldDot.setStockCode(newDot.getStockCode());
+        return mapper.getLastKlineDotBean(oldDot);
+    }
+
+    /**
      * 找到一个K线点对应的相关交易数据
      * @param dotBean
      * @param list
