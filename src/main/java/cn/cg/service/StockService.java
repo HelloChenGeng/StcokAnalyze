@@ -36,6 +36,14 @@ public class StockService {
     @Autowired
     KLineDotMapper kLineMapper;
 
+    /**
+     * 获取监控中的股票列表
+     * @return
+     */
+    public List<StockBean> getStockList(){
+        return mapper.selectAll();
+    }
+
     public void updatePageAndTime(StockBean stockBean){
         mapper.mUpdatePageAndTime(stockBean);
     }

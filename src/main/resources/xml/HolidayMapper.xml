@@ -3,7 +3,7 @@
 <mapper namespace="cn.cg.mapper.HolidayMapper">
 
     <insert id="mInsert" >
-        insert into holiday(holidaydate) values #{dateString, jdbcType=VARCHAR}
+        insert into holiday(holidaydate) values (#{dateString, jdbcType=VARCHAR})
     </insert>
 
     <select id="mList" resultType="cn.cg.bean.HolidayBean">

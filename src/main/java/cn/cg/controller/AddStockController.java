@@ -1,16 +1,20 @@
 package cn.cg.controller;
 
+import cn.cg.bean.StockBean;
 import cn.cg.constants.GlobalProperties;
 import cn.cg.form.AddStockForm;
+import cn.cg.service.StockService;
 import cn.cg.thread.AddStockThread;
 import cn.cg.tool.UrlLoader;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by ChenGeng on 2017/12/7.
@@ -19,10 +23,22 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("addStock")
 public class AddStockController {
 
+    @Autowired
+    StockService stockService;
+
     @RequestMapping("preAdd")
     public ModelAndView preAdd(){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("addstock");
+        return mav;
+    }
+
+    @RequestMapping("stocklist")
+    public ModelAndView stockList(){
+        List<StockBean> stockList = stockService.getStockList();
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("stockList", stockList);
+        mav.setViewName("stocklist");
         return mav;
     }
 
