@@ -35,8 +35,7 @@ public class KLineService {
      * @param dotBean
      */
     public void insertKLineDot(KLineDotBean dotBean){
-        //TODO
-
+        mapper.mInsert(dotBean);
     }
 
     /**
@@ -45,7 +44,7 @@ public class KLineService {
      * @return
      */
     public KLineDotBean[] lastKLineDot(StockBean stockBean){
-        return mapper.lastKLineDots(stockBean);
+        return mapper.lastKLineDots(stockBean).toArray(new KLineDotBean[0]);
     }
 
     public KLineDotBean[] createKLineDotBean(StockBean stockBean){
@@ -163,6 +162,10 @@ public class KLineService {
     public void calculateMACD(KLineDotBean newDot){
         KLineDotBean oldDot = getLastKlineDotBean(newDot);
         this.calculateMACD(oldDot, newDot);
+    }
+
+    public void delete(String stockCode){
+        mapper.delete(stockCode);
     }
 
     /**

@@ -12,7 +12,7 @@
     </insert>
 
     <select id="lastKLineDots" resultType="cn.cg.bean.KLineDotBean">
-        select * from klinedot t1, (select type, max(kDotNo) from klinedot where stockCode = #{stockCode, jdbcType=VARCHAR} group by type ) t2
+        select * from klinedot t1, (select type, max(kDotNo) kDotNo from klinedot where stockCode = #{stockCode, jdbcType=VARCHAR} group by type ) t2
         where t1.stockCode = #{stockCode, jdbcType=VARCHAR} and t1.type=t2.type and t1.kDotNo = t2.kDotNo order by t1.type
     </select>
 
@@ -25,5 +25,9 @@
         select * from klinedot
         where stockCode = #{stockCode, jdbcType=VARCHAR} and type = #{type, jdbcType=INTEGER} and kDotNo = #{kDotNo, jdbcType=BIGINT}
     </select>
+
+    <delete id="delete">
+        delete from klinedot where stockCode = #{stockCode}
+    </delete>
 
 </mapper>

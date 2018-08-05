@@ -11,8 +11,10 @@ import java.util.List;
 @Repository("tradeDetailMapper")
 public interface TradeDetailMapper {
 
-    public int mInsertList(List<TradeDetailBean> list);
+    int mInsertList(List<TradeDetailBean> list);
 
-    public List<TradeDetailBean> queryTradeDetail(String stockCode, String tradeDate, String startTime, String endTime);
+    List<TradeDetailBean> queryTradeDetail(String stockCode, String tradeDate, String startTime, String endTime);
+
+    void delete(String stockCode);
 
 }

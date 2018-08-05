@@ -15,4 +15,9 @@
     <select id="queryTradeDetail" resultType="cn.cg.bean.TradeDetailBean">
         select * from tradedetail where code = #{stockCode, jdbcType=VARCHAR} and tradeDate = #{tradeDate, jdbcType=VARCHAR} and tradeDate between #{startTime, jdbcType=VARCHAR} and #{endTime, jdbcType=VARCHAR}
     </select>
+
+    <delete id="delete">
+        delete from tradedetail where code = #{stockCode}
+    </delete>
+
 </mapper>

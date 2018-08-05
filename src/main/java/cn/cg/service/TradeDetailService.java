@@ -25,4 +25,8 @@ public class TradeDetailService {
         return mapper.queryTradeDetail(dotBean.getStockCode(), dotBean.getTradeDate(), dotBean.getStartTime(), dotBean.getEndTime());
     }
 
+    public void delete(String stockCode){
+        mapper.delete(stockCode);
+    }
+
 }

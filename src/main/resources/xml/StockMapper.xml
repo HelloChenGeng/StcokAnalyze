@@ -17,4 +17,8 @@
         where stockCode = #{stockCode, jdbcType=VARCHAR}
     </update>
 
+    <delete id="delete">
+        delete from stock where stockCode = #{stockCode}
+    </delete>
+
 </mapper>

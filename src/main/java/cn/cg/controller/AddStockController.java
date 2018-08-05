@@ -66,6 +66,12 @@ public class AddStockController {
         return mav;
     }
 
+    @RequestMapping("delete")
+    public ModelAndView delete(String stockCode){
+        stockService.delete(stockCode);
+        return stockList();
+    }
+
     private String[] getStockInformation(String stockCode) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("http://hq.sinajs.cn/list=");

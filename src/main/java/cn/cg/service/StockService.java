@@ -28,13 +28,10 @@ public class StockService {
     StockMapper mapper;
 
     @Autowired
-    TradeDetailMapper tradeDetailMapper;
+    TradeDetailService tradeDetailService;
 
     @Autowired
     KLineService kLineService;
-
-    @Autowired
-    KLineDotMapper kLineMapper;
 
     /**
      * 获取监控中的股票列表
@@ -95,7 +92,7 @@ public class StockService {
         stockBean.setLastTimeDealTime(lastTrade.getTradeDate() + " " + lastTrade.getTradeTime());
         stockBean.setLastTimePageCount(totalPageCount);
         mapper.mInsert(stockBean);
-        tradeDetailMapper.mInsertList(tradeDetails);
+        tradeDetailService.mInsert(tradeDetails);
         List<KLineDotBean> dots = new ArrayList<KLineDotBean>();
 
         KLineDotBean dotBean5 = kLineService.createKLineDot(lastTrade.getTradeDate(), "15:00:00", 5, form.getStockCode());
@@ -105,8 +102,7 @@ public class StockService {
         dotBean5.setkDotNo(1);
         dotBean5.setDif(form.getExpma512()-form.getExpma526());
         dotBean5.setDea(form.getDea5());
-
-        kLineMapper.mInsert(dotBean5);
+        kLineService.insertKLineDot(dotBean5);
 
         KLineDotBean dotBean15 = kLineService.createKLineDot(lastTrade.getTradeDate(), "15:00:00", 15, form.getStockCode());
         dotBean15.setStockCode(form.getStockCode());
@@ -115,7 +111,7 @@ public class StockService {
         kLineService.setKLineField(tradeDetails, dotBean15);
         dotBean15.setkDotNo(1);
         dotBean15.setDif(form.getExpma1512()-form.getExpma1526());
-        kLineMapper.mInsert(dotBean15);
+        kLineService.insertKLineDot(dotBean15);
 
         KLineDotBean dotBean1 = kLineService.createKLineDot(lastTrade.getTradeDate(), "15:00:00", 30, form.getStockCode());
         dotBean1.setStockCode(form.getStockCode());
@@ -124,9 +120,16 @@ public class StockService {
         kLineService.setKLineField(tradeDetails, dotBean1);
         dotBean1.setkDotNo(1);
         dotBean1.setDif(form.getExpma3012()-form.getExpma3026());
-        kLineMapper.mInsert(dotBean1);
+        kLineService.insertKLineDot(dotBean1);
 
         return result;
+    }
+
+    public void delete(String stockCode){
+        mapper.delete(stockCode);
+        tradeDetailService.delete(stockCode);
+        kLineService.delete(stockCode);
+        return;
     }
 
 }

@@ -61,7 +61,7 @@
                                                 <tr class="<c:if test="${status.index}%2==0">odd</c:if><c:if test="${status.index}%2==">even</c:if>">
                                                     <td>${stock.stockCode}</td>
                                                     <td>${stock.stockName}</td>
-                                                    <td></td>
+                                                    <td><a href="/addStock/delete?stockCode=${stock.stockCode}">删除</a></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>

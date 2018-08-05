@@ -17,4 +17,6 @@ public interface StockMapper {
 
     public void mUpdatePageAndTime(StockBean bean);
 
+    public void delete(String stockCode);
+
 }
